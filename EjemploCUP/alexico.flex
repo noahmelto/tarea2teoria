@@ -66,6 +66,10 @@ Espacio     = {Salto} | [ \t\f]
     seguido de 0 o mas digitos del 0 al 9 */
 Entero = 0 | [1-9][0-9]*
 
+Color = 'A' | 'R' | 'V' | 'B' | 'N' 
+
+Direccion = 'S'|'N'|'E'|'O'
+
 
 %% //fin de opciones
 /* -------------------- Seccion de reglas lexicas ------------------ */
@@ -85,27 +89,82 @@ Entero = 0 | [1-9][0-9]*
    
     /* Regresa que el token SEMI declarado en la clase sym fue encontrado. */
     ";"                { return symbol(sym.SEMI); }
-    /* Regresa que el token OP_SUMA declarado en la clase sym fue encontrado. */
-    "+"                {  System.out.print(" + ");
-                          return symbol(sym.OP_SUMA); }
-    /* Regresa que el token OP_SUMA declarado en la clase sym fue encontrado. */
-    "-"                {  System.out.print(" - ");
-                          return symbol(sym.OP_RESTA); }
-    /* Regresa que el token OP_SUMA declarado en la clase sym fue encontrado. */
-    "*"                {  System.out.print(" * ");
-                          return symbol(sym.OP_MULT); }
+    /* Regresa que el token DOWNDPEN declarado en la clase sym fue encontrado. */
+    "bajar-pluma"                {  System.out.print(" bajar-pluma ");
+                          return symbol(sym.DOWNDPEN); }
+    /* Regresa que el token UPDPEN declarado en la clase sym fue encontrado. */
+    "levantar-pluma"                {  System.out.print(" levantar-pluma ");
+                          return symbol(sym.UPDPEN); }
+    /* Regresa que el token COLORDPEN declarado en la clase sym fue encontrado. */
+    "color-pluma"                {  System.out.print(" color-pluma ");
+                          return symbol(sym.COLORDPEN); }
+    /* Regresa que el token DIRDPEN declarado en la clase sym fue encontrado. */
+    "direccion-pluma"                {  System.out.print(" direccion-pluma ");
+                          return symbol(sym.DIRDPEN); }
+    /* Regresa que el token GOFWD declarado en la clase sym fue encontrado. */
+    "avanzar"                {  System.out.print(" avanzar ");
+                          return symbol(sym.GOFWD); }
+    /* Regresa que el token IF declarado en la clase sym fue encontrado. */
+    "if"                {  System.out.print(" if ");
+                          return symbol(sym.IF); }
+    /* Regresa que el token THEN declarado en la clase sym fue encontrado. */
+    "then"                {  System.out.print(" then ");
+                          return symbol(sym.THEN); }
+    /* Regresa que el token ELSE declarado en la clase sym fue encontrado. */
+    "else"                {  System.out.print(" else ");
+                          return symbol(sym.ELSE); }
+    /* Regresa que el token WHILE declarado en la clase sym fue encontrado. */
+    "while"                {  System.out.print(" while ");
+                          return symbol(sym.WHILE); }
+    /* Regresa que el token DO declarado en la clase sym fue encontrado. */
+    "do"                {  System.out.print(" do ");
+                          return symbol(sym.DO); }
+    /* Regresa que el token TABLECOL declarado en la clase sym fue encontrado. */
+    "tablero-color"                {  System.out.print(" tablero-color ");
+                          return symbol(sym.TABLECOL); }
+    /* Regresa que el token BOUND declarado en la clase sym fue encontrado. */
+    "borde"                {  System.out.print(" borde ");
+                          return symbol(sym.BOUND); }
+    /* Regresa que el token PENDIR declarado en la clase sym fue encontrado. */
+    "pluma-dir"                {  System.out.print(" pluma-direccion ");
+                          return symbol(sym.PENDIR); }
+    /* Regresa que el token PENCOL declarado en la clase sym fue encontrado. */
+    "pluma-col"                {  System.out.print(" pluma-color ");
+                          return symbol(sym.PENCOL); }
+    /* Regresa que el token PENUP declarado en la clase sym fue encontrado. */
+    "pluma-arriba"                {  System.out.print(" pluma-arriba ");
+                          return symbol(sym.PENUP); }
+    /* Regresa que el token PENDOWN declarado en la clase sym fue encontrado. */
+    "pluma-abajo"                {  System.out.print(" pluma-abajo ");
+                          return symbol(sym.PENDOWN); }
+    /* Regresa que el token AND declarado en la clase sym fue encontrado. */
+    "and"                {  System.out.print(" and ");
+                          return symbol(sym.AND); }
+    /* Regresa que el token OR declarado en la clase sym fue encontrado. */
+    "or"                {  System.out.print(" or ");
+                          return symbol(sym.OR); }
+    /* Regresa que el token NOT declarado en la clase sym fue encontrado. */
+    "not"                {  System.out.print(" not ");
+                          return symbol(sym.NOT); }
     /* Regresa que el token PARENIZQ declarado en la clase sym fue encontrado. */
-    "("                {  System.out.print(" ( ");
-                          return symbol(sym.PARENIZQ); }
-                          /* Regresa que el token PARENIZQ declarado en la clase sym fue encontrado. */
-    ")"                {  System.out.print(" ) ");
-                          return symbol(sym.PARENDER); }
-   
+    "{"                {  System.out.print(" PARENIZQ ");
+                          return symbol(sym.OR); }
+    /* Regresa que el token PARENDER declarado en la clase sym fue encontrado. */
+    "}"                {  System.out.print(" PARENDER ");
+                          return symbol(sym.NOT); }
+    
+    
     /* Si se encuentra un entero, se imprime, se regresa un token numero
         que representa un entero y el valor que se obtuvo de la cadena yytext
         al convertirla a entero. yytext es el token encontrado. */
     {Entero}      {   System.out.print(yytext()); 
                       return symbol(sym.ENTERO, new Integer(yytext())); }
+
+    {Color}      {   System.out.print(yytext()); 
+                      return symbol(sym.COLOR, new Character(yytext())); }
+
+    {Direccion}      {   System.out.print(yytext()); 
+                      return symbol(sym.DIRECCION, new Character(yytext())); }
 
     /* No hace nada si encuentra el espacio en blanco */
     {Espacio}       { /* ignora el espacio */ } 

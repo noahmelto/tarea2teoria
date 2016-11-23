@@ -56,17 +56,18 @@ parser code {:
 /* Terminales (tokens obtenidos por el analizador lexico).  
 
    Terminales que no tienen un valor son listados primero, los terminales que
-   tienen un valor como los enteros son listados en la segunda o demas lineas. */
-terminal           SEMI, OP_SUMA, OP_RESTA, OP_MULT, PARENIZQ, PARENDER;
+   tienen un valor como los enteros son listados en la segunda o demas lineas.  OP_SUMA, OP_RESTA, OP_MULT,  expr_list, expr_part,*/
+terminal           SEMI, PARENIZQ, PARENDER, DOWNDPEN, UPDPEN, COLORDPEN, DIRDPEN, GOFWD, IF, THEN, ELSE, WHILE, DO, TABLECOL, BOUND, PENDIR, PENCOL, PENUP, PENDOWN, AND, OR, NOT;
 terminal Integer   ENTERO;
+terminal Character      COLOR, DIRECCION;
    
 /* No terminales usados en la seccion gramatical. 
 
    Primero se lista los no terminales que tienen un valor Object y despues
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
-non terminal Object     expr_list, expr_part;
-non terminal Integer    expr, factor, termino;
+non terminal Object     op, express;
+//non terminal Integer    expr, factor, termino;
    
 
 /* -------------Seccion de predencia y asociacion de los terminales----------- */
@@ -106,6 +107,50 @@ non terminal Integer    expr, factor, termino;
    termina en simbolos terminales se dice que no reduce, y por lo tanto nunca se finaliza
    su procesado.
 */
+
+
+    op ::=  DOWNDPEN 
+            |
+            UPDPEN
+            |
+            COLORDPEN COLOR
+            |
+            DIRDPEN DIRECCION
+            |
+            GOFWD ENTERO
+            |
+            IF express THEN PARENIZQ op PARENDER
+            |
+            IF express THEN PARENIZQ op PARENDER ELSE PARENIZQ op PARENDER
+            |
+            WHILE express PARENIZQ DO PARENDER
+            |
+            op SEMI op
+            ;
+
+    express ::= TABLECOL COLOR
+                |
+                BOUND
+                |
+                PENDIR DIRECCION
+                |
+                PENCOL COLOR 
+                |
+                PENUP
+                |
+                PENDOWN
+                |
+                express AND express
+                |
+                express OR express
+                |
+                NOT express
+                ;
+///Hasta aqui la de nosotros
+
+
+                ////el resto es del ejemplo
+/*
    
     expr_list ::= expr_list expr_part
                   |
@@ -114,7 +159,7 @@ non terminal Integer    expr, factor, termino;
 /* 'expr_part' se compone de una expr seguida de SEMI, o de una asign seguida de SEMI.
    asign:a esta estableciendo que a representa al objeto asociado a asign, entre {: :}
    se coloca el sodigo en java para las acciones a tomar al cumplirse una produccion.
-*/
+
    
    expr_part ::= expr:e
                   {:
@@ -127,7 +172,7 @@ non terminal Integer    expr, factor, termino;
   de esa forma se realiza una suma. Tambien puede ser un numero entero, con esto
   se devuelve el valor del entero. En RESULT se almacena el valor de las acciones,
   y se pasa al siguiente nivel de la gramatica.
-*/              
+             
 
    expr      ::=  expr:e OP_SUMA factor:f
                   {:
@@ -165,4 +210,4 @@ termino       ::=  PARENIZQ expr:e PARENDER
                   {:
                     RESULT = e;
                   :}
-                  ; 
+                  ; */

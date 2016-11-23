@@ -77,7 +77,7 @@ public class EjemploCUP {
                     /*  Ejecutamos el analizador lexico y sintactico
                      sobre un archivo de pruebas. 
                      */
-                    String[] archivoPrueba = {"test.txt"};
+                    String[] archivoPrueba = {"espiral.txt"};
                     AnalizadorSintactico.main(archivoPrueba);
                     System.out.println("Ejecutado!");
                     break;
