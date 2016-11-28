@@ -52,8 +52,8 @@ public class EjemploCUP {
                         archSintactico = args[1];
                     } else {
                         System.out.println("\n*** Procesando archivo default ***\n");
-                        archLexico = "alex.flex";
-                        archSintactico = "asin.cup";
+                        archLexico = "alexico.flex";
+                        archSintactico = "asintactico.cup";
                     }
                     String[] alexico = {archLexico};
                     String[] asintactico = {"-parser", "AnalizadorSintactico", archSintactico};
